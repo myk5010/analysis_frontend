@@ -29,7 +29,7 @@ export default new Router({
     // 首页
     {
       path: "/",
-      redirect: '/default',
+      redirect: 'default',
       component: () => import("@/layout/layout_admin/index.vue"),
       meta: { title: "首页" },
       children: [

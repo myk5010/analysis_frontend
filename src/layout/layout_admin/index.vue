@@ -5,6 +5,15 @@
     <el-container>
       <el-aside width="64px">
         <el-menu default-active="1-4-1" class="el-menu-vertical-demo" :collapse="isCollapse" router>
+          <el-submenu index="/">
+            <template slot="title">
+              <i class="el-icon-s-data"></i>
+              <span slot="title">数据分析</span>
+            </template>
+            <el-menu-item-group>
+              <el-menu-item index="/default">统计</el-menu-item>
+            </el-menu-item-group>
+          </el-submenu>
           <el-submenu index="stock">
             <template slot="title">
               <i class="el-icon-s-home"></i>
@@ -14,15 +23,6 @@
               <el-menu-item index="/stock/list">库存</el-menu-item>
               <el-menu-item index="/stock/in">收货</el-menu-item>
               <el-menu-item index="/stock/out">出货</el-menu-item>
-            </el-menu-item-group>
-          </el-submenu>
-          <el-submenu index="analysis">
-            <template slot="title">
-              <i class="el-icon-s-data"></i>
-              <span slot="title">数据分析</span>
-            </template>
-            <el-menu-item-group>
-              <el-menu-item index="/analysis/data">统计</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
           <el-submenu index="system">
