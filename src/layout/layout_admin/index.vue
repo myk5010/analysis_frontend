@@ -1,7 +1,9 @@
 
 <template>
   <el-container>
-    <el-header>出入帐数据分析</el-header>
+    <el-header>
+      <h3>出入帐数据分析</h3>
+    </el-header>
     <el-container>
       <el-aside width="64px">
         <el-menu default-active="1-4-1" class="el-menu-vertical-demo" :collapse="isCollapse" router>
@@ -25,13 +27,13 @@
               <el-menu-item index="/stock/out">出货</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
-          <el-submenu index="system">
+          <el-submenu index="system_setting">
             <template slot="title">
               <i class="el-icon-s-tools"></i>
-              <span slot="title">系统管理</span>
+              <span slot="title">系统设置</span>
             </template>
             <el-menu-item-group>
-              <el-menu-item index="/system/setting">设置</el-menu-item>
+              <el-menu-item index="/system_setting/category_list">物料种类</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
         </el-menu>

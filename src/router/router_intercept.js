@@ -19,36 +19,36 @@ router.beforeEach(async (to, from, next) => {
   // NProgress开始进度条
   NProgress.start()
 
-  let hasToken = getToken()
+  // let hasToken = getToken()
 
-  if (hasToken) {
-    if (Object.prototype.hasOwnProperty.call(store.getters['user/userInfo'],'name')) {
-      next()
-    } else {
-      try {
-        // get user info
-        const userInfo = await store.dispatch('user/getUser')
-        // update user info
-        await store.dispatch('user/userPermission', userInfo)
-        next()
-      } catch (error) {
-        // remove token and go to login page to re-login
-        await store.dispatch('user/resetToken')
-        next(`/login?redirect=${to.path}`)
-        NProgress.done()
-      }
-    }
-  } else {
-    /* has no token*/
-    if (whiteList.indexOf(to.path) !== -1) {
-      // in the free login whitelist, go directly
-      next()
-    } else {
-      // other pages that do not have permission to access are redirected to the login page.
-      next(`/login?redirect=${to.path}`)
-      NProgress.done()
-    }
-  }
+  // if (hasToken) {
+  //   if (Object.prototype.hasOwnProperty.call(store.getters['user/userInfo'],'name')) {
+  //     next()
+  //   } else {
+  //     try {
+  //       // get user info
+  //       const userInfo = await store.dispatch('user/getUser')
+  //       // update user info
+  //       await store.dispatch('user/userPermission', userInfo)
+  //       next()
+  //     } catch (error) {
+  //       // remove token and go to login page to re-login
+  //       await store.dispatch('user/resetToken')
+  //       next(`/login?redirect=${to.path}`)
+  //       NProgress.done()
+  //     }
+  //   }
+  // } else {
+  //   /* has no token*/
+  //   if (whiteList.indexOf(to.path) !== -1) {
+  //     // in the free login whitelist, go directly
+  next()
+  //   } else {
+  //     // other pages that do not have permission to access are redirected to the login page.
+  //     next(`/login?redirect=${to.path}`)
+  //     NProgress.done()
+  //   }
+  // }
 })
 
 // 全局后置钩子-常用于结束动画等
