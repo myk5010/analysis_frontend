@@ -59,11 +59,10 @@ service.interceptors.response.use(
   error => {
     // code:422, 后端 - Laravel表单验证专用报错
     if (error.response.status === 422) {
-      var info = error.response.data.errors
-      var keyArr = Object.keys(info)
+      // console.dir(error)
       Message({
         type: "error",
-        message: info[keyArr[0]][0],
+        message: JSON.stringify(error.response.data.message),
         duration: 5000,
         showClose: true
       })
@@ -89,19 +88,19 @@ service.interceptors.response.use(
     }
     // 为了防止重复提示报错
     // 每次提示前从vuex获取上一次提示消息内容和时间进行判断
-    const onTime = new Date().getTime()
-    if (
-      onTime - store.getters["global/msgTime"] > 1000 ||
-      store.getters["global/message"] != msg
-    ) {
-      Message({
-        message: msg,
-        type: "error",
-        duration: 5000,
-        showClose: true
-      })
-      store.dispatch("global/saveMessage", { msg: msg, time: onTime })
-    }
+    // const onTime = new Date().getTime()
+    // if (
+    //   onTime - store.getters["global/msgTime"] > 1000 ||
+    //   store.getters["global/message"] != msg
+    // ) {
+    //   Message({
+    //     message: msg,
+    //     type: "error",
+    //     duration: 5000,
+    //     showClose: true
+    //   })
+    //   store.dispatch("global/saveMessage", { msg: msg, time: onTime })
+    // }
     if (error.response.status === 401) {
       store.dispatch("user/resetToken").then(() => {
         router.push("/login")

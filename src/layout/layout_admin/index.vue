@@ -27,13 +27,13 @@
               <el-menu-item index="/stock/out">出货</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
-          <el-submenu index="system_setting">
+          <el-submenu index="system">
             <template slot="title">
               <i class="el-icon-s-tools"></i>
               <span slot="title">系统设置</span>
             </template>
             <el-menu-item-group>
-              <el-menu-item index="/system_setting/category_list">物料种类</el-menu-item>
+              <el-menu-item index="/system/category_list">物料种类</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
         </el-menu>

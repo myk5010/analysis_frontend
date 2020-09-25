@@ -6,9 +6,16 @@ import store from "@/store"
 import Element from "element-ui"
 import "element-ui/lib/theme-chalk/index.css"
 // 路由拦截器
-import "@/router/router_intercept.js"
+// import "@/router/router_intercept.js"
+// 过滤器
+import * as filters from "@/utils/filters.js"
 
 Vue.config.productionTip = false
+
+Object.keys(filters).forEach(key => {
+  Vue.filter(key, filters[key])
+})
+
 
 Vue.use(Element, {
   size:
