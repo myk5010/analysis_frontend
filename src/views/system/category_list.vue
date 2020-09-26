@@ -22,14 +22,14 @@
           align="center"
           label="单位">
         </el-table-column>
-        <el-table-column
+        <!-- <el-table-column
           label="操作"
           align="center"
           width="100">
           <template slot-scope="scope">
             <el-button @click="handleDelete(scope.row.id)" type="text" size="small">删除</el-button>
           </template>
-        </el-table-column>
+        </el-table-column> -->
       </el-table>
       <el-col :span="24">
         <div style="padding:20px 0; text-align:center;">

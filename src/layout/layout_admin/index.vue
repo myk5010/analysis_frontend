@@ -5,15 +5,15 @@
       <h3>出入帐数据分析</h3>
     </el-header>
     <el-container>
-      <el-aside width="64px">
-        <el-menu default-active="1-4-1" class="el-menu-vertical-demo" :collapse="isCollapse" router>
-          <el-submenu index="/">
+      <el-aside width="200px">
+        <el-menu default-active="1-4-1" class="el-menu-vertical-demo" :collapse="isCollapse" :default-openeds="openList" router>
+          <el-submenu index="default">
             <template slot="title">
               <i class="el-icon-s-data"></i>
               <span slot="title">数据分析</span>
             </template>
             <el-menu-item-group>
-              <el-menu-item index="/default">统计</el-menu-item>
+              <el-menu-item index="/default/index">统计</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
           <el-submenu index="stock">
@@ -55,7 +55,8 @@ export default {
   components: {},
   data() {
     return {
-      isCollapse: true,
+      isCollapse: false,
+      openList: ['default', 'stock', 'system']
     }
   },
   watch: {
