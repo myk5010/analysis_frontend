@@ -6,7 +6,7 @@
     </el-header>
     <el-container>
       <el-aside width="200px">
-        <el-menu default-active="1-4-1" class="el-menu-vertical-demo" :collapse="isCollapse" :default-openeds="openList" router>
+        <el-menu default-active="/default/index" class="el-menu-vertical-demo" :collapse="isCollapse" :default-openeds="openList" router>
           <el-submenu index="default">
             <template slot="title">
               <i class="el-icon-s-data"></i>
@@ -27,13 +27,13 @@
               <el-menu-item index="/stock/out">出货</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
-          <el-submenu index="system">
+          <el-submenu index="setting">
             <template slot="title">
               <i class="el-icon-s-tools"></i>
               <span slot="title">系统设置</span>
             </template>
             <el-menu-item-group>
-              <el-menu-item index="/system/category_list">物料种类</el-menu-item>
+              <el-menu-item index="/setting/category_list">物料种类</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
         </el-menu>
@@ -56,7 +56,7 @@ export default {
   data() {
     return {
       isCollapse: false,
-      openList: ['default', 'stock', 'system']
+      openList: ['default', 'stock', 'setting']
     }
   },
   watch: {

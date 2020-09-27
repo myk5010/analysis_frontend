@@ -15,6 +15,7 @@
       :data="tableData"
       border
       :height="tableHeight"
+      v-loading="tableLoading"
       :cell-style="function(){return 'padding:0'}"
       style="border: solid 1px #e6e6e6;">
       <template v-for="item in table_header">
@@ -22,11 +23,11 @@
           show-overflow-tooltip
           :width="item['width']"
           :key="item['key']"
+          :prop="item['prop']"
           :label="item['label']"
           :column-key="item['columnKey']"
           :filters="item['filters']"
           v-if="show_header.includes(item['key'])">
-          <template slot-scope="scope">{{ scope.row[item['key']] }}</template>
         </el-table-column>
       </template>
     </el-table>
@@ -35,36 +36,28 @@
 
 <script>
 import { table_header, show_header } from "./in_data"
+import { stock_in_list } from "@/api/stock"
 
 export default {
   data () {
     return {
+      // 入库列表
       table_header,
       show_header,
-      tableData: [{
-        date: '2016-05-02',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        date: '2016-05-04',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1517 弄'
-      }, {
-        date: '2016-05-01',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1519 弄'
-      }, {
-        date: '2016-05-03',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1516 弄'
-      }],
-      tableHeight: ''
+      tableData: [],
+      tableHeight: '',
+      tableLoading: false,
     }
   },
   methods: {
+    // 初始数据请求
+    fetchdata() {
+
+    },
   },
   created() {
     this.tableHeight = document.documentElement.clientHeight - 200
+    this.fetchdata()
   },
 }
 </script>

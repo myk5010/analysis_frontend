@@ -30,12 +30,11 @@ export default new Router({
     // 首页
     {
       path: "/",
-      redirect: 'default',
+      redirect: '/default/index',
       component: () => import("@/layout/layout_admin/index.vue"),
-      meta: { title: "首页" },
       children: [
         {
-          path: "default",
+          path: "/default/index",
           components: require("@/views/home/default"),
           meta: { title: "首页" }
         }

@@ -6,6 +6,7 @@
         :height="tableHeight"
         :cell-style="function(){return 'padding:0'}"
         border
+        v-loading="loading"
         style="border: solid 1px #e6e6e6;">
         <el-table-column
           prop="materiel_name"
@@ -102,6 +103,7 @@ export default {
       // 列表
       tableData: [],
       tableHeight: '',
+      loading: false,
       // 筛选
       condition: {
         // 分页
@@ -126,10 +128,15 @@ export default {
     }
   },
   methods: {
+    // 初始数据请求
     fetchData() {
+      this.loading = true
       category_list(this.condition).then(res => {
+        this.loading = false
         this.tableData = res.data
         this.total = res.total
+      }, err => {
+        this.loading = false
       })
     },
     // 分页
@@ -157,19 +164,16 @@ export default {
     },
     // 提交
     handleSubmit() {
-      add_category(this.add_form).then(res => {
-        console.log(res)
+      this.$refs.add_form.validate((valid) => {
+        if (valid) {
+          add_category(this.add_form).then(res => {
+            this.fetchData()
+          })
+        } else {
+          console.log('error submit!!')
+          return false
+        }
       })
-      // this.$refs.add_form.validate((valid) => {
-      //   if (valid) {
-      //     add_category(this.add_form).then(res => {
-      //       console.log(res)
-      //     })
-      //   } else {
-      //     console.log('error submit!!')
-      //     return false
-      //   }
-      // })
     },
     // 清空 - 提交
     handleClearSub() {

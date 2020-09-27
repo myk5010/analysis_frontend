@@ -15,6 +15,7 @@
       :data="tableData"
       border
       :height="tableHeight"
+      v-loading="tableLoading"
       :cell-style="function(){return 'padding:0'}"
       style="border: solid 1px #e6e6e6;">
       <template v-for="item in table_header">
@@ -23,11 +24,11 @@
           align='center'
           :width="item['width']"
           :key="item['key']"
+          :prop="item['prop']"
           :label="item['label']"
           :column-key="item['columnKey']"
           :filters="item['filters']"
           v-if="show_header.includes(item['key'])">
-          <template slot-scope="scope">{{ scope.row[item['key']] }}</template>
         </el-table-column>
       </template>
       <el-table-column
@@ -58,14 +59,18 @@
 
 <script>
 import { table_header, show_header } from "./list_data"
+import { stock_list } from "@/api/stock"
 
 export default {
   data () {
     return {
+      // 库存列表
       table_header,
       show_header,
       tableData: [],
       tableHeight: '',
+      tableLoading: false,
+      // 筛选条件
       condition: {
         // 分页
         page: 1,
@@ -75,6 +80,17 @@ export default {
     }
   },
   methods: {
+    // 初始数据请求
+    fetchData() {
+      this.tableLoading = true
+      stock_list(this.condition).then(res => {
+        this.tableLoading = false
+        this.tableData = res.data
+        this.total = res.total
+      }, err => {
+        this.tableLoading = false
+      })
+    },
     // 分页
     handleSizeChange(val) {
       this.condition.limit = val
@@ -91,6 +107,7 @@ export default {
   },
   created() {
     this.tableHeight = document.documentElement.clientHeight - 200
+    this.fetchData()
   },
 }
 </script>
