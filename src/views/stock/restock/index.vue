@@ -8,7 +8,7 @@
         </el-breadcrumb>
       </el-col>
       <el-col :span="6" :offset='12' style="height: 50px;line-height: 50px;text-align: right;">
-        <el-button type="primary">进货</el-button>
+        <el-button type="primary" @click="restock">进货</el-button>
       </el-col>
     </div>
     <el-table
@@ -31,14 +31,33 @@
         </el-table-column>
       </template>
     </el-table>
+    <el-col :span="24">
+      <div style="padding:20px 0; text-align:center;">
+        <el-pagination
+          background
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page.sync="condition.page"
+          :page-sizes="[20, 50, 100, 500]"
+          :page-size="condition.limit"
+          layout="total, sizes, prev, pager, next"
+          :total="total"
+        ></el-pagination>
+      </div>
+    </el-col>
+    <restock-content :visible.sync="dialogVisible"></restock-content>
   </div>
 </template>
 
 <script>
-import { table_header, show_header } from "./in_data"
+import { table_header, show_header } from "./index_data"
 import { stock_in_list } from "@/api/stock"
+import restockContent from "./restock_content"
 
 export default {
+  components: {
+    restockContent,
+  },
   data () {
     return {
       // 入库列表
@@ -47,12 +66,33 @@ export default {
       tableData: [],
       tableHeight: '',
       tableLoading: false,
+      dialogVisible: false,
+      // 筛选
+      condition: {
+        // 分页
+        page: 1,
+        limit: 50,
+      },
+      total: 0,
     }
   },
   methods: {
     // 初始数据请求
     fetchdata() {
 
+    },
+    // 进货
+    restock() {
+      this.dialogVisible = true
+    },
+    // 分页
+    handleSizeChange(val) {
+      this.condition.limit = val
+      this.fetchData()
+    },
+    handleCurrentChange(val) {
+      this.condition.page = val
+      this.fetchData()
     },
   },
   created() {

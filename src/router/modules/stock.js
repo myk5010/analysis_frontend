@@ -10,9 +10,9 @@ export default [
         meta: { title: "库存" }
       },
       {
-        path: "in",
-        components: require("@/views/stock/in.vue"),
-        meta: { title: "收货" }
+        path: "restock",
+        components: require("@/views/stock/restock/index.vue"),
+        meta: { title: "进货" }
       },
       {
         path: "out",

@@ -23,7 +23,7 @@
             </template>
             <el-menu-item-group>
               <el-menu-item index="/stock/list">库存</el-menu-item>
-              <el-menu-item index="/stock/in">收货</el-menu-item>
+              <el-menu-item index="/stock/restock">进货</el-menu-item>
               <el-menu-item index="/stock/out">出货</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
