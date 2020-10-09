@@ -1,11 +1,12 @@
 <template>
   <el-row>
-    <el-col :span="9">
+    <el-col :span="7">
       <el-form ref="searchForm" :model="searchForm" inline label-width="70px">
-        <el-form-item label="物料名称">
-          <el-input v-model="searchForm.materiel_name" placeholder="支持模糊搜索" style="width: 120px;"></el-input>
-        </el-form-item>
-        <el-form-item style="float: right;margin-right: 0;">
+        <!-- <el-form-item label="物料名称">
+          <el-input v-model="searchForm.materiel_name" placeholder="支持模糊搜索" style="width: 120px;" @input="fetchData"></el-input>
+        </el-form-item> -->
+        <!-- <el-form-item style="float: right;margin-right: 0;"> -->
+        <el-form-item>
           <el-button type="primary" @click="openDialog">增加物料种类</el-button>
         </el-form-item>
       </el-form>
@@ -39,8 +40,8 @@
         </el-table-column>
       </el-table>
     </el-col>
-    <el-col :span="14" :offset="1">
-      <el-form ref="search_form" :model="postForm" :rules="rules" inline label-width="80px">
+    <el-col :span="16" :offset="1">
+      <el-form ref="postForm" :model="postForm" :rules="rules" inline label-width="80px">
         <el-form-item label="收据单号" prop="serial">
           <el-input v-model="postForm.serial" style="width: 160px;"></el-input>
         </el-form-item>
@@ -50,6 +51,7 @@
         :height="tableHeight"
         :cell-style="function(){return 'padding:0'}"
         border
+        ref="restockNumberTable"
         show-summary
         :summary-method='summaryTable'
         style="border: solid 1px #e6e6e6;box-shadow: 0 2px 12px 0 #0000001a;">
@@ -72,6 +74,22 @@
           label="单价">
           <template slot-scope="{row}">
             <el-input v-model="row.price" />
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="commission"
+          align="center"
+          label="佣金">
+          <template slot-scope="{row}">
+            <el-input v-model="row.commission" />
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="comment"
+          align="center"
+          label="备注">
+          <template slot-scope="{row}">
+            <el-input v-model="row.comment" />
           </template>
         </el-table-column>
         <el-table-column
@@ -107,6 +125,7 @@
 
 <script>
 import { category_list, add_category } from "@/api/system_setting"
+import { restock_create } from "@/api/stock"
 
 export default {
   props: {
@@ -133,6 +152,7 @@ export default {
       },
       // 筛选
       searchForm: { 'materiel_name': '' },
+      // 收据单号 - 表单验证
       rules: {
         serial: [{ required: true, message: '请输入收据单号', trigger: 'blur' },],
       },
@@ -152,7 +172,7 @@ export default {
     // 初始数据请求
     fetchData() {
       this.loading = true
-      category_list(this.condition).then(res => {
+      category_list(this.searchForm).then(res => {
         this.loading = false
         this.tableData = res.data
         this.total = res.total
@@ -206,7 +226,7 @@ export default {
           sums[index] = ''
         }
       })
-      sums[3] = sums[3] + '元'
+      sums[5] = sums[5] + '元'
       return sums
     },
     // 实收金额计算
@@ -214,14 +234,33 @@ export default {
       row.sum = Math.round(row.in_number*row.price*10)/10
       return row.sum
     },
+    // 提交进货数据
+    onSubmit() {
+      this.$refs.postForm.validate((valid) => {
+        if (valid) {
+          restock_create(this.postForm).then(res => {
+            this.$emit('submitResult',res)
+          }, err => {
+            this.$emit('submitResult',false)
+          })
+        } else {
+          console.log('error submit!!')
+          this.$emit('submitResult',false)
+          return false
+        }
+      })
+    },
+  },
+  updated() {
+    this.$nextTick(() => {
+      this.$refs['restockNumberTable'].doLayout()
+    })  
   }
 }
 </script>
 
 <style scoped lang='scss'>
   .el-table {
-    overflow:visible !important;
-
     /deep/ .cell {
       padding: 0;
     }

@@ -4,11 +4,11 @@
       <el-col :span="6">
         <el-breadcrumb separator-class="el-icon-arrow-right" style="height: 50px;line-height: 50px;">
           <el-breadcrumb-item :to="{ path: '/' }">库存</el-breadcrumb-item>
-          <el-breadcrumb-item>进货列表</el-breadcrumb-item>
+          <el-breadcrumb-item>出库列表</el-breadcrumb-item>
         </el-breadcrumb>
       </el-col>
       <el-col :span="6" :offset='12' style="height: 50px;line-height: 50px;text-align: right;">
-        <el-button type="primary" @click="restock">进货</el-button>
+        <el-button type="primary" @click="restock">出库</el-button>
       </el-col>
     </div>
     <el-table
@@ -45,19 +45,14 @@
         ></el-pagination>
       </div>
     </el-col>
-    <restock-content :visible.sync="dialogVisible" @submitResult='submitResult'></restock-content>
   </div>
 </template>
 
 <script>
 import { table_header, show_header } from "./index_data"
 import { restock_list } from "@/api/stock"
-import restockContent from "./restock_content"
 
 export default {
-  components: {
-    restockContent,
-  },
   data () {
     return {
       // 入库列表
@@ -88,7 +83,7 @@ export default {
     restock() {
       this.dialogVisible = true
     },
-    // 分页 --->
+    // 分页
     handleSizeChange(val) {
       this.condition.limit = val
       this.fetchData()
@@ -96,13 +91,6 @@ export default {
     handleCurrentChange(val) {
       this.condition.page = val
       this.fetchData()
-    },
-    // <--- end
-    // 子组件提交结果返回
-    submitResult(res) {
-      if (res) {
-        this.fetchData()
-      } 
     },
   },
   created() {

@@ -3,13 +3,12 @@ export const table_header = [
   {
     key: 'created_at',
     prop: 'created_at',
-    width: '180',
-    label: '日期',
+    label: '进货日期',
   },
   {
     key: 'serial',
     prop: 'serial',
-    label: '单据号',
+    label: '收货单号',
   },
   {
     key: 'materiel_name',
@@ -29,22 +28,12 @@ export const table_header = [
   {
     key: 'in_number',
     prop: 'in_number',
-    label: '实收数量',
+    label: '进货量',
   },
   {
     key: 'price',
     prop: 'price',
-    label: '单价',
-  },
-  // {
-  //   key: 'sum',
-  //   prop: 'sum',
-  //   label: '实收金额',
-  // },
-  {
-    key: 'comment',
-    prop: 'comment',
-    label: '备注',
+    label: '进货价',
   },
 ]
 // table表格, 表头显示的字段
@@ -57,5 +46,4 @@ export const show_header = [
   'in_number',
   'price',
   'sum',
-  'comment',
 ]

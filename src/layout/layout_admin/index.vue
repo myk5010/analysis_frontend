@@ -6,7 +6,12 @@
     </el-header>
     <el-container>
       <el-aside width="200px">
-        <el-menu default-active="/default/index" class="el-menu-vertical-demo" :collapse="isCollapse" :default-openeds="openList" router>
+        <el-menu 
+          :default-active="menuActive" 
+          class="el-menu-vertical-demo" 
+          :collapse="isCollapse" 
+          :default-openeds="openList" 
+          router>
           <el-submenu index="default">
             <template slot="title">
               <i class="el-icon-s-data"></i>
@@ -22,9 +27,9 @@
               <span slot="title">库存管理</span>
             </template>
             <el-menu-item-group>
-              <el-menu-item index="/stock/list">库存</el-menu-item>
-              <el-menu-item index="/stock/restock">进货</el-menu-item>
-              <el-menu-item index="/stock/out">出货</el-menu-item>
+              <el-menu-item index="/stock/list">库存详情</el-menu-item>
+              <el-menu-item index="/stock/restock">进货记录</el-menu-item>
+              <el-menu-item index="/stock/outstock">出库记录</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
           <el-submenu index="setting">
@@ -56,7 +61,8 @@ export default {
   data() {
     return {
       isCollapse: false,
-      openList: ['default', 'stock', 'setting']
+      openList: ['default', 'stock', 'setting'],
+      menuActive: '/default/index',
     }
   },
   watch: {
@@ -64,13 +70,11 @@ export default {
   },
   methods: {
     updateRouter() {
-      // if (
-      //   Object.prototype.hasOwnProperty.call(this.$route.meta, "activeMenu")
-      // ) {
-      //   this.menuActive = this.$route.meta.activeMenu
-      // } else {
-      //   this.menuActive = this.$route.path
-      // }
+      if (Object.prototype.hasOwnProperty.call(this.$route.meta, "activeMenu")) {
+        this.menuActive = this.$route.meta.activeMenu
+      } else {
+        this.menuActive = this.$route.path
+      }
     }
   },
   created() {

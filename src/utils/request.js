@@ -57,35 +57,42 @@ service.interceptors.response.use(
     return response.data
   },
   error => {
+    // console.dir(error)
+    Message({
+      type: "error",
+      message: JSON.stringify(error.response.data.message),
+      duration: 5000,
+      showClose: true
+    })
+    return Promise.reject(error)
     // code:422, 后端 - Laravel表单验证专用报错
-    if (error.response.status === 422) {
-      // console.dir(error)
-      Message({
-        type: "error",
-        message: JSON.stringify(error.response.data.message),
-        duration: 5000,
-        showClose: true
-      })
-      return Promise.reject(error)
-    }
-    // 默认报错
-    let msg = error.message
-    // console.dir(error);
-    // 如果后台有返回报错信息
-    if (Object.prototype.hasOwnProperty.call(error.response.data, "message")) {
-      msg = error.response.data.message
-    }
-    // 如果后台有返回更详细的报错信息
-    if (
-      Object.prototype.hasOwnProperty.call(error.response.data, "meta") &&
-      Object.prototype.hasOwnProperty.call(error.response.data.meta, "error")
-    ) {
-      msg = error.response.data.meta.error
-    }
-    // token过期
-    if (error.response.status === 401) {
-      msg = "登录超时, 请重新登录"
-    }
+    // if (error.response.status === 422) {
+    //   Message({
+    //     type: "error",
+    //     message: JSON.stringify(error.response.data.message),
+    //     duration: 5000,
+    //     showClose: true
+    //   })
+    //   return Promise.reject(error)
+    // }
+    // // 默认报错
+    // let msg = error.message
+    // // console.dir(error);
+    // // 如果后台有返回报错信息
+    // if (Object.prototype.hasOwnProperty.call(error.response.data, "message")) {
+    //   msg = error.response.data.message
+    // }
+    // // 如果后台有返回更详细的报错信息
+    // if (
+    //   Object.prototype.hasOwnProperty.call(error.response.data, "meta") &&
+    //   Object.prototype.hasOwnProperty.call(error.response.data.meta, "error")
+    // ) {
+    //   msg = error.response.data.meta.error
+    // }
+    // // token过期
+    // if (error.response.status === 401) {
+    //   msg = "登录超时, 请重新登录"
+    // }
     // 为了防止重复提示报错
     // 每次提示前从vuex获取上一次提示消息内容和时间进行判断
     // const onTime = new Date().getTime()
@@ -101,12 +108,12 @@ service.interceptors.response.use(
     //   })
     //   store.dispatch("global/saveMessage", { msg: msg, time: onTime })
     // }
-    if (error.response.status === 401) {
-      store.dispatch("user/resetToken").then(() => {
-        router.push("/login")
-      })
-    }
-    return Promise.reject(error)
+    // if (error.response.status === 401) {
+    //   store.dispatch("user/resetToken").then(() => {
+    //     router.push("/login")
+    //   })
+    // }
+    // return Promise.reject(error)
   }
 )
 

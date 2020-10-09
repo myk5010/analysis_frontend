@@ -15,9 +15,9 @@ export default [
         meta: { title: "进货" }
       },
       {
-        path: "out",
-        components: require("@/views/stock/out.vue"),
-        meta: { title: "出货" }
+        path: "outstock",
+        components: require("@/views/stock/outstock/index.vue"),
+        meta: { title: "出库" }
       },
     ]
   }

@@ -18,39 +18,46 @@
       </el-row>
     </div>
     <div class="dialog-detail">
-      <restock-form :postForm='postForm' ref="restockForm" @submitResult='submitResult'></restock-form>
+      <outstock-form :multipleTable='multipleTable' ref="outstockForm" @submitResult='submitResult'></outstock-form>
     </div>
   </el-dialog>
 </template>
 
 <script>
-import restockForm from "./restock_form"
+import outstockForm from "./outstock_form"
 
 export default {
   props: {
     dialog_title: {
       type: String,
-      default: '进货',
+      default: '出库',
+    },
+    multipleTable: {
+      type: Array,
     }
   },
   components: {
-    restockForm,
+    outstockForm,
   },
   data() {
     return {
       status: false,
-      postForm: {
-        'serial': '',
-        restockNumberTable: [],
-      },
       submitLoading: false,
+    }
+  },
+  watch: {
+    multipleTable: {
+      immediate: true,
+      handler: function (val) {
+        console.log(val)
+      }
     }
   },
   methods: {
     // 触发子组件提交
     onSubmit() {
       this.submitLoading = true
-      this.$refs['restockForm'].onSubmit()
+      this.$refs['outstockForm'].onSubmit()
     },
     // 子组件提交结果返回
     submitResult(res) {

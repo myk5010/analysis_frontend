@@ -3,32 +3,38 @@ export const table_header = [
   {
     key: 'materiel_name',
     prop: 'materiel.materiel_name',
-    width: '180px',
     label: '物料名称',
   },
   {
     prop: 'materiel.standard',
     key: 'standard',
-    width: '120px',
     label: '规格',
+  },
+  {
+    prop: 'in_number',
+    key: 'in_number',
+    label: '数量',
   },
   {
     prop: 'materiel.unit',
     key: 'unit',
-    width: '120px',
     label: '单位',
   },
   {
-    prop: 'gross',
-    key: 'gross',
-    width: '120px',
-    label: '总量',
+    prop: 'price',
+    key: 'price',
+    label: '价格',
   },
   {
-    prop: 'amount',
-    key: 'amount',
-    width: '120px',
-    label: '总价',
+    prop: 'created_at',
+    key: 'created_at',
+    width: '180',
+    label: '进货日期',
+  },
+  {
+    prop: 'serial',
+    key: 'serial',
+    label: '单据号',
   },
   {
     prop: 'comment',
@@ -41,7 +47,9 @@ export const show_header = [
   'materiel_name',
   'standard',
   'unit',
-  'gross',
-  'amount',
-  'comment'
+  'in_number',
+  'price',
+  'comment',
+  'created_at',
+  'serial',
 ]
